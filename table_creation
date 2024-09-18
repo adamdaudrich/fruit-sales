@@ -1,0 +1,55 @@
+DROP TABLE public.fruit;
+DROP TABLE public.vendor;
+DROP TABLE public.sales;
+
+CREATE TABLE public.fruit(	
+	fruit_id SERIAL,
+	fruit_name VARCHAR(20) UNIQUE, 
+	price_per_box NUMERIC(4,2) CHECK (price > 0)
+	PRIMARY KEY(fruit_id)
+);
+
+
+CREATE TABLE public.vendor(
+	vendor_id SERIAL,
+	vendor_name VARCHAR(20) UNIQUE NOT NULL,
+	PRIMARY KEY(vendor_id)
+);
+	
+	
+CREATE TABLE public.sales(
+	sales_id SERIAL,
+	vendor_id INTEGER, 
+	box_quantity INTEGER,
+	fruit_id INTEGER,
+	time TIMESTAMP NOT NULL,
+	PRIMARY KEY(sales_id),
+	CONSTRAINT fruit_id
+		FOREIGN KEY(fruit_id) 
+			REFERENCES fruit(fruit_id)
+			ON DELETE SET NULL,
+	CONSTRAINT vendor
+		FOREIGN KEY (vendor_id) 
+			REFERENCES vendor(vendor_id)
+);	
+
+
+INSERT INTO vendor (vendor_name) VALUES ('Fruiterie');
+INSERT INTO vendor (vendor_name) VALUES ('Loblaws');
+INSERT INTO vendor (vendor_name) VALUES ('PA');
+	
+INSERT INTO fruit (fruit_name, price) VALUES ('apple', 40.69);
+INSERT INTO fruit (fruit_name, price) VALUES ('banana', 60.69);
+INSERT INTO fruit (fruit_name, price) VALUES ('orange', 30.69);
+
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (1, 20, 1);
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (1, 21, 2);
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (1, 22, 3);
+
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (2, 24, 1);
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (2, 25, 2);
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (2, 26, 3);
+
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (3, 27, 1);
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (3, 28, 2);
+INSERT INTO sales (vendor_id, box_quantity, fruit_id) VALUES (3, 29, 3);
