@@ -1,2 +1,2 @@
 # fruit-sales
-testing a table creation syntax
+a table creation syntax
